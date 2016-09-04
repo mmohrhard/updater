@@ -10,4 +10,5 @@ urlpatterns = patterns('',
 
     url(r'^admin/', include(admin.site.urls)),
     url(r'^update/', include('release.urls')),
+    url(r'^accounts/', include('django.contrib.auth.urls')),
 )
