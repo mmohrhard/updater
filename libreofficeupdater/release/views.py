@@ -17,6 +17,14 @@ logger = logging.getLogger(__name__)
 class UploadRelease(forms.Form):
     release_config = forms.FileField()
 
+def get_update_file(update_file):
+    data = { 'url': update_file.url,
+            'hash': update_file.hash,
+            'size': update_file.size,
+            'hash_function': update_file.hash_function}
+
+    return data
+
 def update_check(request, api_version, product, version, build_id, os, locale, channel):
     print(api_version)
     if int(api_version) != 1:
@@ -26,12 +34,19 @@ def update_check(request, api_version, product, version, build_id, os, locale, c
     if matched_releases.count() == 0:
         return JsonResponse({'response': 'no update available'})
 
+    release = matched_releases[0]
     print(matched_releases)
     print(version)
     print(build_id)
     print(locale)
 
-    return JsonResponse({'foo':'bar'})
+    data = { 'from': '*',
+            'see_also': release.see_also,
+            'version': '',
+            'update': get_update_file(release.release_file),
+            'languages': {}}
+
+    return JsonResponse(data)
 
 def handle_file(file_dict):
     url = file_dict['url']
