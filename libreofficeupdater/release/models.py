@@ -11,11 +11,11 @@ class MarFile(models.Model):
 class LanguageFile(models.Model):
     language = models.CharField(max_length=20)
     mar_file = models.ForeignKey(MarFile, unique=True)
-    release = models.ForeignKey('Release')
+    release = models.ForeignKey('Release', db_index=True)
 
 class PartialUpdate(models.Model):
     mar_file = models.ForeignKey(MarFile, unique=True)
-    old_release = models.ForeignKey('Release', related_name='patial_update_dests')
+    old_release = models.ForeignKey('Release', related_name='patial_update_dests', db_index=True)
     new_release = models.ForeignKey('Release', related_name='partial_updates')
 
 class PartialLanguageUpdate(models.Model):
@@ -30,10 +30,10 @@ class UpdateChannel(models.Model):
 
 class Release(models.Model):
     name = models.CharField(max_length=100)
-    channel = models.ForeignKey(UpdateChannel)
+    channel = models.ForeignKey(UpdateChannel, db_index=True)
     product = models.CharField(max_length=50, db_index=True)
     os = models.CharField(max_length=50, db_index=True)
-    added = models.DateTimeField(auto_now=True)
+    added = models.DateTimeField(auto_now=True, db_index=True)
     
     see_also = models.URLField(default='')
 
