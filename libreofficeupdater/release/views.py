@@ -26,7 +26,6 @@ def get_update_file(update_file):
     return data
 
 def update_check(request, api_version, product, version, build_id, os, locale, channel):
-    print(api_version)
     if int(api_version) != 1:
         return JsonResponse({'error' : 'only api version 1 supported right now'})
 
