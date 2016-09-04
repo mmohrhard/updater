@@ -17,12 +17,12 @@ BASE_DIR = os.path.dirname(os.path.dirname(__file__))
 # See https://docs.djangoproject.com/en/1.6/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'ywz9%q21r@kv*j=86qtv6373pe)m=5r0z!@blepvd6b-^wc6t4'
+SECRET_KEY = os.eviron.get('SECRET_KEY', 'ywz9%q21r@kv*j=86qtv6373pe)m=5r0z!@blepvd6b-^wc6t4')
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = os.eviron.get('DEBUG', False)
 
-TEMPLATE_DEBUG = True
+TEMPLATE_DEBUG = os.eviron.get('DEBUG', False)
 
 ALLOWED_HOSTS = []
 
