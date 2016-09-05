@@ -10,6 +10,7 @@ from django.conf.urls import url
 from . import views
 
 urlpatterns = [
+        url(r'partial-targets/(?P<api_version>.+)/(?P<os>.+)/(?P<channel>.+)$', views.partial_targets),
         url(r'(?P<api_version>.+)/(?P<product>.+)/(?P<version>.+)/(?P<build_id>.+)/(?P<os>.+)/(?P<locale>.+)/(?P<channel>.+)$', views.update_check, name='update_check'),
         url(r'upload/release$', views.upload_release, name='upload_release'),
         url(r'channels$', views.get_channels, name='channels')

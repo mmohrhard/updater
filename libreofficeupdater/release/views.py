@@ -47,6 +47,21 @@ def update_check(request, api_version, product, version, build_id, os, locale, c
 
     return JsonResponse(data)
 
+def partial_targets(request, api_version, channel, os):
+    if int(api_version) != 1:
+        return JsonResponse({'error' : 'only api version 1 supported right now'})
+
+    matched_releases = Release.objects.filter(os = os, channel__name = channel).order_by('-added')
+    data = []
+    for release in matched_releases[:3]:
+        languages = LanguageFile.objects.filter(release = release)
+        languages_return = [{'lang': language.language, 'file': get_update_file(language.mar_file)} for language in languages]
+        partial = {'complete': get_update_file(release.release_file),
+                'languages': languages_return}
+
+        data.append(partial)
+    return JsonResponse(data, safe = False)
+
 def handle_file(file_dict):
     url = file_dict['url']
     size = int(file_dict['size'])
