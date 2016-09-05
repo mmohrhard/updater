@@ -39,7 +39,7 @@ def update_check(request, api_version, product, version, build_id, os, locale, c
     print(build_id)
     print(locale)
 
-    data = { 'from': '*',
+    data = { 'from': build_id,
             'see_also': release.see_also,
             'version': '',
             'update': get_update_file(release.release_file),
