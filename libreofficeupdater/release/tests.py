@@ -48,4 +48,27 @@ class ChannelTest(TestCase):
         response = c.get('/update/channels')
         self.assertJSONEqual(response.content, ['test 1', 'test 2'])
 
-# Create your tests here.
+class PartialTargetTest(TestCase):
+
+    def get_test_file(self, file_name):
+        return os.path.join(dir_path, 'data', file_name)
+
+    def setUp(self):
+        user = User.objects.create_user('test user')
+        self.c = Client()
+        self.c.force_login(user)
+        self.channel = UpdateChannel.objects.create(name = 'daily-master')
+
+    def test_partial_info(self):
+        with open(self.get_test_file('build_config2.json'), 'r') as f:
+            response = self.c.post('/update/upload/release', {'release_config': f})
+            print(response.content)
+            self.assertEqual(200, response.status_code)
+        with open(self.get_test_file('build_config.json'), 'r') as f:
+            response = self.c.post('/update/upload/release', {'release_config': f})
+            self.assertEqual(200, response.status_code)
+        with open(self.get_test_file('build_config3.json'), 'r') as f:
+            response = self.c.post('/update/upload/release', {'release_config': f})
+            self.assertEqual(200, response.status_code)
+        response = self.c.get('/update/partial-targets/1/Linux_X86_64/daily-master')
+        print(response.content)
