@@ -1,0 +1,51 @@
+{
+    "updateChannel": "daily-master",
+    "complete": {
+        "hash": "db3cb7ea774aef6fa0fc0945c4abfbb73ea994ba6dd628ab408bfe0dc78f9523d61ac38bb531d6089ffd5354d7bf00db54d59acc4a6956dc17e4c4a7df2ae6a5",
+        "url": "http://dev-builds.libreoffice.org/update/daily-master/ec5aca87e534ed64d227609d6a547115452fca52/Linux_X86_64/LibreOfficeDev_5.3.0.0.alpha0+_Linux_X86_64_ec5aca87e534ed64d227609d6a547115452fca52_complete.mar",
+        "size": 172389990,
+        "hashFunction": "sha512"
+    },
+    "languages": [
+        {
+            "lang": "en-US",
+            "complete": {
+                "hash": "85e240854b63793ee31cbeb397091e42648f3231ffd04f0e7dd4cf2a34f487e6da9eb0271a1a34eebf20e1d9e2926eae2418a3eb31d860ef53956e34920efa63",
+                "url": "http://dev-builds.libreoffice.org/update/daily-master/ec5aca87e534ed64d227609d6a547115452fca52/Linux_X86_64/LibreOfficeDev_5.3.0.0.alpha0+_Linux_X86_64_ec5aca87e534ed64d227609d6a547115452fca52_en-US_complete_langpack.mar",
+                "hashFunction": "sha512",
+                "size": 350827
+            }
+        },
+        {
+            "lang": "de",
+            "complete": {
+                "hash": "5282214ace72f8ed4099a4034e810ef2cab3b42aceb2c24d9e3cd3f447e95fe0b8075218c98258dae940ff42a4b2437185eb592d00689f2cd2bd91b62204f439",
+                "url": "http://dev-builds.libreoffice.org/update/daily-master/ec5aca87e534ed64d227609d6a547115452fca52/Linux_X86_64/LibreOfficeDev_5.3.0.0.alpha0+_Linux_X86_64_ec5aca87e534ed64d227609d6a547115452fca52_de_complete_langpack.mar",
+                "hashFunction": "sha512",
+                "size": 532123
+            }
+        },
+        {
+            "lang": "fr",
+            "complete": {
+                "hash": "88b4fdbe25ba5c418fa94457574747daadaa28422e5fd357c2d46d250a25e9149235189e688b233ca998998910adc8c3478991ceee4d1e64ce8da839162e1034",
+                "url": "http://dev-builds.libreoffice.org/update/daily-master/ec5aca87e534ed64d227609d6a547115452fca52/Linux_X86_64/LibreOfficeDev_5.3.0.0.alpha0+_Linux_X86_64_ec5aca87e534ed64d227609d6a547115452fca52_fr_complete_langpack.mar",
+                "hashFunction": "sha512",
+                "size": 537946
+            }
+        },
+        {
+            "lang": "qtz",
+            "complete": {
+                "hash": "564f9ad82e032e5e340b0cd5cfc73b6fe75153daf78f2f008e5a76e4ef2001d161034290cb2a6fd81157c7b0fa00f3e5cf431ad4c03b97531695b7f8956045b7",
+                "url": "http://dev-builds.libreoffice.org/update/daily-master/ec5aca87e534ed64d227609d6a547115452fca52/Linux_X86_64/LibreOfficeDev_5.3.0.0.alpha0+_Linux_X86_64_ec5aca87e534ed64d227609d6a547115452fca52_qtz_complete_langpack.mar",
+                "hashFunction": "sha512",
+                "size": 569570
+            }
+        }
+    ],
+    "version": "5.3.0.0.alpha0+",
+    "platform": "Linux_X86_64",
+    "productName": "LibreOfficeDev",
+    "buildNumber": "ec5aca87e534ed64d227609d6a547115452fca52"
+}
