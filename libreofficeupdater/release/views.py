@@ -59,8 +59,7 @@ def update_check(request, api_version, product, build_id, os, channel):
 
     # fall back to a full mar
 
-    print(current_user_release)
-
+    # collect the language pack update info
     language_objects = LanguageFile.objects.filter(release=current_update_channel_release)
     languages = {}
     for language_object in language_objects:
