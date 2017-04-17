@@ -87,6 +87,9 @@ class PartialTargetTest(TestCase):
         self.c.force_login(user)
         self.channel = UpdateChannel.objects.create(name = 'daily-master')
 
+    def tearDown(self):
+        UpdateChannel.objects.all().delete()
+
     def test_partial_info(self):
         with open(self.get_test_file('build_config2.json'), 'r') as f:
             response = self.c.post('/update/upload/release', {'release_config': f})
