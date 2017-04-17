@@ -24,26 +24,26 @@ class UpdateTest(TestCase):
 
     def test_simple_request(self):
         c = Client()
-        response = c.get('/update/check/1/LibreOfficeDev/test-build/linux-64/en-US/master-daily')
+        response = c.get('/update/check/1/LibreOfficeDev/test-build/linux-64/master-daily')
         print(response)
 
     def test_invalid_api_version(self):
         c = Client()
-        response = c.get('/update/check/1000/LibreOfficeDev/test-build/linux-64/en-US/master-daily')
+        response = c.get('/update/check/1000/LibreOfficeDev/test-build/linux-64/master-daily')
         self.assertEqual(response.status_code, 200)
         content = response.content
         self.assertJSONEqual(content, {'error':'only api version 1 supported right now'})
 
     def test_unsupported_build(self):
         c = Client()
-        response = c.get('/update/check/1/LibreOfficeDev/test-build/linux-64/en-US/master-daily')
+        response = c.get('/update/check/1/LibreOfficeDev/test-build/linux-64/master-daily')
         self.assertEqual(response.status_code, 200)
         content = response.content
         self.assertJSONEqual(content, {'response':'Your current build is not supported.'})
 
     def test_no_supported_update(self):
         c = Client()
-        response = c.get('/update/check/1/LibreOfficeDev/release/Linux/en-US/master-daily')
+        response = c.get('/update/check/1/LibreOfficeDev/release/Linux/master-daily')
         self.assertEqual(response.status_code, 200)
         content = response.content
         self.assertJSONEqual(content, {'response':'There is currently no supported update for your update channel'})
