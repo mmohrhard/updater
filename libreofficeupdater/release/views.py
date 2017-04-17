@@ -123,8 +123,12 @@ def upload_release(request):
 
     new_release = Release.objects.create(name = build_number_str, channel = update_channel,
             product = product_name_str, os = platform_str, release_file = handle_file(data['complete']))
+
     for language in data['languages']:
         LanguageFile.objects.create(language=language['lang'], release=new_release, mar_file=handle_file(language['complete']))
+
+    update_channel.current_release = new_release
+    update_channel.save()
 
     return JsonResponse({})
 
