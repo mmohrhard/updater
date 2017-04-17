@@ -24,6 +24,7 @@ class PartialLanguageUpdate(models.Model):
 
 class UpdateChannel(models.Model):
     name = models.CharField(max_length=50)
+    current_release = models.ForeignKey('Release', null=True, blank=True)
 
     def __str__(self):
         return self.name
