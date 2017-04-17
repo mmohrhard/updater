@@ -68,6 +68,7 @@ def update_check(request, api_version, product, build_id, os, locale, channel):
         languages[language_object.language] = get_update_file(language_object.mar_file)
 
     data = { 'from': '*', # full mar works for any previous build
+            'to': current_update_channel_release.name,
             'see also': current_update_channel_release.see_also,
             'update': get_update_file(current_update_channel_release.release_file),
             'languages': languages}
