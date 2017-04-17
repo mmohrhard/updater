@@ -36,17 +36,19 @@ def update_check(request, api_version, product, build_id, os, locale, channel):
     if current_user_release.count() == 0:
         return JsonResponse({'response': 'Your current build is not supported.'})
 
+    current_user_release = current_user_release[0]
+
     current_update_channel_release = update_channel.current_release
     if current_update_channel_release is None:
         return JsonResponse({'response': 'There is currently no supported update for your update channel'})
 
-    if current_update_channel_release == current_user_release[0]:
+    if current_update_channel_release == current_user_release:
         return JsonResponse({'response': 'Your release is already updated.'})
 
     print(current_user_release)
     print(locale)
 
-    data = { 'from': current_user_release[0].name,
+    data = { 'from': '*', # full mar works for any previous build
             'see also': current_update_channel_release.see_also,
             'update': get_update_file(current_update_channel_release.release_file),
             'languages': {}}
