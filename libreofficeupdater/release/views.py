@@ -32,7 +32,7 @@ def update_check(request, api_version, product, build_id, os, locale, channel):
     update_channel = get_object_or_404(UpdateChannel, name = channel)
 
     # first find the corresponding release that the user currently has
-    current_user_release = Release.objects.filter(os = os, channel = update_channel, name = build_id)
+    current_user_release = Release.objects.filter(os = os, channel = update_channel, name = build_id, product=product)
     if current_user_release.count() == 0:
         return JsonResponse({'response': 'Your current build is not supported.'})
 
