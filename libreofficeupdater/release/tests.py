@@ -11,17 +11,45 @@ dir_path = os.path.dirname(os.path.realpath(__file__))
 
 class UpdateTest(TestCase):
 
+    def setUp(self):
+        update_channel = UpdateChannel.objects.create(name="master-daily")
+        mar_file = MarFile.objects.create(url="www.libreoffice.org", size=100, hash="", hash_function="")
+        release = Release.objects.create(name="release", channel=update_channel, product="LibreOfficeDev",
+                os="Linux", release_file=mar_file)
+
+    def tearDown(self):
+        UpdateChannel.objects.all().delete()
+        Release.objects.all().delete()
+        MarFile.objects.all().delete()
+
     def test_simple_request(self):
         c = Client()
-        response = c.get('/update/1/LibreOfficeDev/5.3.0.0.alpha0+/test-build/linux-64/en-US/master-daily')
+        response = c.get('/update/check/1/LibreOfficeDev/5.3.0.0.alpha0+/test-build/linux-64/en-US/master-daily')
         print(response)
 
     def test_invalid_api_version(self):
         c = Client()
-        response = c.get('/update/1000/LibreOfficeDev/5.3.0.0.alpha0+/test-build/linux-64/en-US/master-daily')
+        response = c.get('/update/check/1000/LibreOfficeDev/5.3.0.0.alpha0+/test-build/linux-64/en-US/master-daily')
         self.assertEqual(response.status_code, 200)
         content = response.content
         self.assertJSONEqual(content, {'error':'only api version 1 supported right now'})
+
+    def test_unsupported_build(self):
+        c = Client()
+        response = c.get('/update/check/1/LibreOfficeDev/5.3.0.0.alpha0+/test-build/linux-64/en-US/master-daily')
+        self.assertEqual(response.status_code, 200)
+        content = response.content
+        self.assertJSONEqual(content, {'response':'Your current build is not supported.'})
+
+    def test_no_supported_update(self):
+        c = Client()
+        response = c.get('/update/check/1/LibreOfficeDev/5.3.0.0.alpha0+/release/Linux/en-US/master-daily')
+        self.assertEqual(response.status_code, 200)
+        content = response.content
+        self.assertJSONEqual(content, {'response':'There is currently no supported update for your update channel'})
+
+    def test_release_already_uptodate(self):
+        pass
 
 class UploadTest(TestCase):
 
