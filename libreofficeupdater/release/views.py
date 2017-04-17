@@ -25,7 +25,7 @@ def get_update_file(update_file):
 
     return data
 
-def update_check(request, api_version, product, version, build_id, os, locale, channel):
+def update_check(request, api_version, product, build_id, os, locale, channel):
     if int(api_version) != 1:
         return JsonResponse({'error' : 'only api version 1 supported right now'})
 
@@ -44,13 +44,10 @@ def update_check(request, api_version, product, version, build_id, os, locale, c
         return JsonResponse({'response': 'Your release is already updated.'})
 
     print(current_user_release)
-    print(version)
-    print(build_id)
     print(locale)
 
     data = { 'from': current_user_release[0].name,
             'see also': current_update_channel_release.see_also,
-            'version': '',
             'update': get_update_file(current_update_channel_release.release_file),
             'languages': {}}
 
