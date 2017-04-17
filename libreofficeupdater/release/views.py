@@ -108,3 +108,12 @@ def get_channels(request):
     channels = UpdateChannel.objects.values('name')
     channel_names = [channel['name'] for channel in channels]
     return JsonResponse(channel_names, safe=False)
+
+def get_releases(request, channel):
+    if request.method != 'GET':
+        return HttpResponseNotAllowed('Only GET allowed')
+
+    update_channel = get_object_or_404(UpdateChannel, name=channel)
+    releases = Release.objects.filter(channel=update_channel).values('name')
+    release_names = [release['name'] for release in releases]
+    return JsonResponse(release_names, safe=False)
