@@ -29,20 +29,29 @@ def update_check(request, api_version, product, version, build_id, os, locale, c
     if int(api_version) != 1:
         return JsonResponse({'error' : 'only api version 1 supported right now'})
 
-    matched_releases = Release.objects.filter(os = os, channel__name = channel).order_by('-added')
-    if matched_releases.count() == 0:
-        return JsonResponse({'response': 'no update available'})
+    update_channel = get_object_or_404(UpdateChannel, name = channel)
 
-    release = matched_releases[0]
-    print(matched_releases)
+    # first find the corresponding release that the user currently has
+    current_user_release = Release.objects.filter(os = os, channel = update_channel, name = build_id)
+    if current_user_release.count() == 0:
+        return JsonResponse({'response': 'Your current build is not supported.'})
+
+    current_update_channel_release = update_channel.current_release
+    if current_update_channel_release is None:
+        return JsonResponse({'response': 'There is currently no supported update for your update channel'})
+
+    if current_update_channel_release == current_user_release[0]:
+        return JsonResponse({'response': 'Your release is already updated.'})
+
+    print(current_user_release)
     print(version)
     print(build_id)
     print(locale)
 
-    data = { 'from': build_id,
-            'see also': release.see_also,
+    data = { 'from': current_user_release[0].name,
+            'see also': current_update_channel_release.see_also,
             'version': '',
-            'update': get_update_file(release.release_file),
+            'update': get_update_file(current_update_channel_release.release_file),
             'languages': {}}
 
     return JsonResponse(data)
