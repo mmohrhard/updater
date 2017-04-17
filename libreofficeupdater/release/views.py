@@ -25,6 +25,10 @@ def get_update_file(update_file):
 
     return data
 
+def find_partial_update(old_release, new_release):
+    partial_update = PartialUpdate.objects.get(old_release=old_release, new_release=new_release)
+    return partial_update
+
 def update_check(request, api_version, product, build_id, os, locale, channel):
     if int(api_version) != 1:
         return JsonResponse({'error' : 'only api version 1 supported right now'})
@@ -44,6 +48,16 @@ def update_check(request, api_version, product, build_id, os, locale, channel):
 
     if current_update_channel_release == current_user_release:
         return JsonResponse({'response': 'Your release is already updated.'})
+
+    # try to find a partial update from the old to the new release
+    try:
+        partial_update = find_partial_update(current_user_release, current_update_channel_release)
+        if partial_update:
+            pass
+    except:
+        pass
+
+    # fall back to a full mar
 
     print(current_user_release)
     print(locale)
