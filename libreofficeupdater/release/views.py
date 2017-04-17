@@ -62,10 +62,15 @@ def update_check(request, api_version, product, build_id, os, locale, channel):
     print(current_user_release)
     print(locale)
 
+    language_objects = LanguageFile.objects.filter(release=current_update_channel_release)
+    languages = {}
+    for language_object in language_objects:
+        languages[language_object.language] = get_update_file(language_object.mar_file)
+
     data = { 'from': '*', # full mar works for any previous build
             'see also': current_update_channel_release.see_also,
             'update': get_update_file(current_update_channel_release.release_file),
-            'languages': {}}
+            'languages': languages}
 
     return JsonResponse(data)
 
