@@ -53,7 +53,13 @@ def update_check(request, api_version, product, build_id, os, channel):
     try:
         partial_update = find_partial_update(current_user_release, current_update_channel_release)
         if partial_update:
-            pass
+            languages = {}
+            data = {'from': current_user_release.name,
+                    'to': current_update_channel_release.name,
+                    'see also': current_update_channel_release.see_also,
+                    'update': get_update_file(partial_update.mar_file),
+                    'languages': languages}
+            return JsonResponse(data)
     except:
         pass
 
