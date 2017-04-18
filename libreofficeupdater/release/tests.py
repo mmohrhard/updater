@@ -51,6 +51,35 @@ class UpdateTest(TestCase):
     def test_release_already_uptodate(self):
         pass
 
+class PartialUpdateTest(TestCase):
+
+    def setUp(self):
+        update_channel = UpdateChannel.objects.create(name="master-daily")
+        mar_file = MarFile.objects.create(url="www.libreoffice.org", size=100, hash="", hash_function="")
+        mar_file2 = MarFile.objects.create(url="www.libreoffice.org", size=101, hash="", hash_function="")
+        release = Release.objects.create(name="release1", channel=update_channel, product="LibreOfficeDev",
+                os="Linux", release_file=mar_file)
+        release2 = Release.objects.create(name="release2", channel=update_channel, product="LibreOfficeDev",
+                os="Linux", release_file=mar_file2)
+        mar_partial_file = MarFile.objects.create(url="www.test.org", size=10, hash="", hash_function="")
+        PartialUpdate.objects.create(mar_file=mar_partial_file, old_release=release, new_release=release2)
+        update_channel.current_release = release2
+        update_channel.save()
+
+    def tearDown(self):
+        PartialUpdate.objects.all().delete()
+        UpdateChannel.objects.all().delete()
+        Release.objects.all().delete()
+        MarFile.objects.all().delete()
+
+    def test_partial_update(self):
+        c = Client()
+        response = c.get('/update/check/1/LibreOfficeDev/release1/Linux/master-daily')
+        self.assertEqual(response.status_code, 200)
+        content = response.content
+        self.assertJSONEqual(content, {"from":"release1","to":"release2","see also":"",
+            "languages":{},"update":{"hash":"","hash_function":"","size":10,"url":"www.test.org"}})
+
 class UploadTest(TestCase):
 
     def get_test_file(self, file_name):
