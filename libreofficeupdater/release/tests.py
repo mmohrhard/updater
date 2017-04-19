@@ -25,7 +25,7 @@ class UpdateTest(TestCase):
     def test_simple_request(self):
         c = Client()
         response = c.get('/update/check/1/LibreOfficeDev/test-build/linux-64/master-daily')
-        print(response)
+        self.assertEqual(response.status_code, 200)
 
     def test_invalid_api_version(self):
         c = Client()
