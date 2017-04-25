@@ -26,6 +26,8 @@ class UpdateChannel(models.Model):
     name = models.CharField(max_length=50)
     current_release = models.ForeignKey('Release', null=True, blank=True)
 
+    num_partial_updates = models.IntegerField(default=1)
+
     def __str__(self):
         return self.name
 

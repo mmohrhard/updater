@@ -83,9 +83,14 @@ def partial_targets(request, api_version, channel, os):
     if int(api_version) != 1:
         return JsonResponse({'error' : 'only api version 1 supported right now'})
 
-    matched_releases = Release.objects.filter(os = os, channel__name = channel).order_by('-added')
+    update_channel = get_object_or_404(UpdateChannel, name = channel)
+    matched_releases = Release.objects.filter(os = os, channel = update_channel).order_by('-added')
     data = {'updates':[]}
-    for release in matched_releases[:3]:
+    print(matched_releases.count())
+    print(os)
+    print(channel)
+    num_updates = update_channel.num_partial_updates
+    for release in matched_releases[:num_updates]:
         language_objects = LanguageFile.objects.filter(release = release)
         languages = {}
         for language_object in language_objects:
