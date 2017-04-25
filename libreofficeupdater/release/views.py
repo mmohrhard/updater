@@ -84,15 +84,17 @@ def partial_targets(request, api_version, channel, os):
         return JsonResponse({'error' : 'only api version 1 supported right now'})
 
     matched_releases = Release.objects.filter(os = os, channel__name = channel).order_by('-added')
-    data = []
+    data = {'updates':[]}
     for release in matched_releases[:3]:
-        languages = LanguageFile.objects.filter(release = release)
-        languages_return = [{'lang': language.language, 'file': get_update_file(language.mar_file)} for language in languages]
-        partial = {'complete': get_update_file(release.release_file),
+        language_objects = LanguageFile.objects.filter(release = release)
+        languages = {}
+        for language_object in language_objects:
+            languages[language_object.language] = get_update_file(language_object.mar_file)
+        partial = {'update': get_update_file(release.release_file),
                 'languages': languages_return}
 
-        data.append(partial)
-    return JsonResponse(data, safe = False)
+        data['updates'].append(partial)
+    return JsonResponse(data)
 
 def handle_file(file_dict):
     url = file_dict['url']
