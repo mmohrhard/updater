@@ -91,7 +91,7 @@ def partial_targets(request, api_version, channel, os):
         for language_object in language_objects:
             languages[language_object.language] = get_update_file(language_object.mar_file)
         partial = {'update': get_update_file(release.release_file),
-                'languages': languages_return}
+                'languages': languages}
 
         data['updates'].append(partial)
     return JsonResponse(data)
