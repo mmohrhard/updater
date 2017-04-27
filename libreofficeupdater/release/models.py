@@ -21,6 +21,7 @@ class PartialUpdate(models.Model):
 class PartialLanguageUpdate(models.Model):
     update = models.ForeignKey(PartialUpdate, unique=True)
     language = models.CharField(max_length=20)
+    mar_file = models.ForeignKey(MarFile, unique=True)
 
 class UpdateChannel(models.Model):
     name = models.CharField(max_length=50)
