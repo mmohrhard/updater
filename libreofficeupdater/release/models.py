@@ -42,3 +42,6 @@ class Release(models.Model):
     see_also = models.URLField(default='')
 
     release_file = models.ForeignKey(MarFile, unique=True)
+
+    class Meta:
+        unique_together = ('name', 'channel', 'product', 'os')
