@@ -24,7 +24,7 @@ DEBUG = os.environ.get('DEBUG', False)
 
 TEMPLATE_DEBUG = os.environ.get('DEBUG', False)
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = os.environ.get('ALLOWED_HOSTS', [])
 
 
 # Application definition
@@ -74,8 +74,13 @@ TEMPLATES = [
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
+        'ENGINE': 'django.db.backends.postgresql', # Add 'postgresql_psycopg2', 'mysql', 'sqlite3' or 'oracle'.
+        'NAME': os.environ.get('DB_NAME', 'updater'),
+
+        'USER': os.environ.get('DB_USER', 'updater'),
+        'PASSWORD': os.environ.get('DB_PASSWORD', ''),
+        'HOST': os.environ.get('DB_HOST', '127.0.0.1'),                      # Empty for localhost through domain sockets or           '127.0.0.1' for localhost through TCP.
+        'PORT': os.environ.get('DB_PORT', ''),                      # Set to empty string for default.
     }
 }
 
