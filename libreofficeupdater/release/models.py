@@ -3,7 +3,7 @@ from __future__ import unicode_literals
 from django.db import models
 
 class MarFile(models.Model):
-    url = models.URLField()
+    url = models.URLField(max_length=1024)
     size = models.IntegerField()
     hash = models.CharField(max_length=128) # hex length of a sha512 hash
     hash_function = models.CharField(max_length=20)
