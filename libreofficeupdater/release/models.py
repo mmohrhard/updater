@@ -19,9 +19,12 @@ class PartialUpdate(models.Model):
     new_release = models.ForeignKey('Release', related_name='partial_updates')
 
 class PartialLanguageUpdate(models.Model):
-    update = models.ForeignKey(PartialUpdate, unique=True)
+    update = models.ForeignKey(PartialUpdate)
     language = models.CharField(max_length=20)
     mar_file = models.ForeignKey(MarFile, unique=True)
+
+    class Meta:
+        unique_together = ('update', 'language')
 
 class UpdateChannel(models.Model):
     name = models.CharField(max_length=50)
