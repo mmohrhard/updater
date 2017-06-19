@@ -6,6 +6,7 @@ from django.http import JsonResponse, HttpResponseNotAllowed, HttpResponseBadReq
 from django.contrib.auth.decorators import login_required
 from django.views.decorators.csrf import csrf_exempt
 from django.shortcuts import get_object_or_404
+from django.db import transaction
 
 from .models import *
 
@@ -109,6 +110,7 @@ def handle_file(file_dict):
     hash_function = file_dict['hashFunction']
     return MarFile.objects.create(url=url, size=size, hash=hash, hash_function=hash_function)
 
+@transaction.atomic
 @login_required
 @csrf_exempt
 def upload_release(request):
