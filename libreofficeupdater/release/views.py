@@ -7,6 +7,7 @@ from django.contrib.auth.decorators import login_required
 from django.views.decorators.csrf import csrf_exempt
 from django.shortcuts import get_object_or_404
 from django.db import transaction
+from django.core.cache import cache
 
 from .models import *
 
@@ -101,6 +102,7 @@ def partial_targets(request, api_version, channel, os):
                 'languages': languages}
 
         data['updates'].append(partial)
+    cache.clear()
     return JsonResponse(data)
 
 def handle_file(file_dict):
