@@ -24,6 +24,10 @@ class HitCountingMiddleware(object):
         self.r = redis.Redis(
                 host='127.0.0.1',
                 port=6379)
+        try:
+            self.r.ping()
+        except redis.ConnectionError:
+            raise MiddlewareNotUsed()
 
     def __call__(self, request):
         self.r.incr(request.path_info)
