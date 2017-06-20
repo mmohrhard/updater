@@ -40,7 +40,8 @@ INSTALLED_APPS = (
     'django.contrib.staticfiles',
 )
 
-MIDDLEWARE_CLASSES = (
+MIDDLEWARE = (
+    'hitcounter.hitcounter.HitCountingMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
