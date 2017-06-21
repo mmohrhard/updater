@@ -138,8 +138,11 @@ def upload_release(request):
 
     update_channel = get_object_or_404(UpdateChannel, name=update_channel_str)
 
+    # this is just for now
+    temp_url = "https://wiki.documentfoundation.org/Development/Updater/SeeAlso"
+
     new_release = Release.objects.create(name = build_number_str, channel = update_channel,
-            product = product_name_str, os = platform_str, release_file = handle_file(data['complete']))
+            product = product_name_str, os = platform_str, release_file = handle_file(data['complete']), see_also = temp_url)
 
     for language in data['languages']:
         LanguageFile.objects.create(language=language['lang'], release=new_release, mar_file=handle_file(language['complete']))
