@@ -1,0 +1,13 @@
+{
+    "updateChannel": "daily-master",
+    "complete": {
+        "hash": "db3cb7ea774aef6fa0fc0945c4abfbb73ea994ba6dd628ab408bfe0dc78f9523d61ac38bb531d6089ffd5354d7bf00db54d59acc4a6956dc17e4c4a7df2ae6a5",
+        "url": "http://dev-builds.libreoffice.org/update/daily-master/ec5aca87e534ed64d227609d6a547115452fca52/Linux_X86_64/LibreOfficeDev_5.3.0.0.alpha0+_Windows_x86_ec5aca87e534ed64d227609d6a547115452fca52_complete.mar",
+        "size": 172389990,
+        "hashFunction": "sha512"
+    },
+    "version": "5.3.0.0.alpha0+",
+    "platform": "Windows_x86",
+    "productName": "LibreOfficeDev",
+    "buildNumber": "ea5aca834ed64d227609d6a547115452fca52"
+}

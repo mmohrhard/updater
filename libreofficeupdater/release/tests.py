@@ -95,6 +95,12 @@ class UploadTest(TestCase):
         with open(self.get_test_file('build_config.json'), 'r') as f:
             response = self.c.post('/update/upload/release', {'release_config': f})
         print(response.content)
+        self.assertEqual(response.status_code, 200)
+
+    def test_simple_win_request(self):
+        with open(self.get_test_file('win_build_config.json'), 'r') as f:
+            response = self.c.post('/update/upload/release', {'release_config': f})
+        self.assertEqual(response.status_code, 200)
 
 class ChannelTest(TestCase):
 
