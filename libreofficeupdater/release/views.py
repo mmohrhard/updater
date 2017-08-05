@@ -144,16 +144,18 @@ def upload_release(request):
     new_release = Release.objects.create(name = build_number_str, channel = update_channel,
             product = product_name_str, os = platform_str, release_file = handle_file(data['complete']), see_also = temp_url)
 
-    for language in data['languages']:
-        LanguageFile.objects.create(language=language['lang'], release=new_release, mar_file=handle_file(language['complete']))
+    if 'languages' in data:
+        for language in data['languages']:
+            LanguageFile.objects.create(language=language['lang'], release=new_release, mar_file=handle_file(language['complete']))
 
     if 'partials' in data:
         for partial in data['partials']:
             old_build_id = partial['from']
             old_release = Release.objects.get(name = old_build_id, channel = update_channel, product = product_name_str, os = platform_str)
             partial_update = PartialUpdate.objects.create(new_release = new_release, mar_file = handle_file(partial['file']), old_release = old_release)
-            for lang, lang_update in partial['languages'].items():
-                PartialLanguageUpdate.objects.create(update = partial_update, language = lang, mar_file = handle_file(lang_update))
+            if 'languages' in partial:
+                for lang, lang_update in partial['languages'].items():
+                    PartialLanguageUpdate.objects.create(update = partial_update, language = lang, mar_file = handle_file(lang_update))
 
     update_channel.current_release = new_release
     update_channel.save()
